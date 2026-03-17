@@ -1,18 +1,22 @@
 import { motion } from "framer-motion";
-import heroBg from "@/assets/hero-bg.jpg";
 
 const transition = { duration: 0.7, ease: [0.2, 0, 0, 1] as const };
 
 const HeroSection = () => {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background */}
+      {/* Background Video */}
       <div className="absolute inset-0">
-        <img
-          src={heroBg}
-          alt="Aurora Makeup Studio"
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
           className="w-full h-full object-cover"
-        />
+          poster=""
+        >
+          <source src="/hero-video.mp4" type="video/mp4" />
+        </video>
         <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/30 to-background" />
       </div>
 
