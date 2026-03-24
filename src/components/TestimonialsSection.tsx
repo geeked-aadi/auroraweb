@@ -316,7 +316,6 @@ const TestimonialsSection = () => {
                   src={videoReviews[activeIndex].src}
                   className="w-full aspect-[9/16] object-cover"
                   playsInline
-                  autoPlay
                   onPlay={() => setPlaying(true)}
                   onPause={() => setPlaying(false)}
                   onEnded={() => setPlaying(false)}

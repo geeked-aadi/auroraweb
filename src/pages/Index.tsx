@@ -79,10 +79,12 @@ const Index = () => {
   const ActiveComponent = sections[activeSection].component;
 
   return (
-    <div className="h-screen bg-background overflow-hidden">
+    <div className="h-screen bg-background overflow-hidden relative">
       <Navbar onMobileNavigate={setActiveSection} />
       <div className="pt-16 h-full overflow-y-auto">
         <ActiveComponent />
+        {/* Render Testimonials immediately after Academy on Mobile */}
+        {activeSection === 5 && <TestimonialsSection />}
       </div>
       <WhatsAppFloat />
     </div>

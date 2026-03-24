@@ -7,7 +7,7 @@ const navLinks = [
   { label: "Services", href: "#services", mobileIndex: 2 },
   { label: "Gallery", href: "#gallery", mobileIndex: 3 },
   { label: "Offers", href: "#offers", mobileIndex: 4 },
-  { label: "Academy", href: "#academy", mobileIndex: 5 },
+  { label: "Academy & Reviews", href: "#academy", mobileIndex: 5 },
   { label: "Contact", href: "#contact", mobileIndex: 7 },
 ];
 
@@ -22,15 +22,41 @@ const Navbar = ({ onMobileNavigate }: NavbarProps) => {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => {
+    let timeoutId: ReturnType<typeof setTimeout>;
+
+    const handleUserActivity = () => {
       const currentY = window.scrollY;
       setScrolled(currentY > 50);
-      setHidden(currentY > 100 && currentY > lastScrollY);
-      setLastScrollY(currentY);
+
+      // Show navbar if it was hidden
+      setHidden(false);
+
+      // Clear any existing timeout
+      clearTimeout(timeoutId);
+
+      // Only hide when idle if we are scrolled down a bit
+      if (currentY > 100) {
+        timeoutId = setTimeout(() => {
+          // If the mobile menu isn't open, hide the navbar
+          setHidden(true);
+        }, 3000); // 3 seconds of idle time
+      }
     };
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
-  }, [lastScrollY]);
+
+    window.addEventListener("scroll", handleUserActivity);
+    window.addEventListener("mousemove", handleUserActivity);
+    window.addEventListener("touchstart", handleUserActivity);
+
+    // Initial setup
+    handleUserActivity();
+
+    return () => {
+      window.removeEventListener("scroll", handleUserActivity);
+      window.removeEventListener("mousemove", handleUserActivity);
+      window.removeEventListener("touchstart", handleUserActivity);
+      clearTimeout(timeoutId);
+    };
+  }, []);
 
   const handleMobileClick = (index: number) => {
     if (onMobileNavigate) {
@@ -39,8 +65,11 @@ const Navbar = ({ onMobileNavigate }: NavbarProps) => {
     }
   };
 
-  // Transparent only on hero (not scrolled), black bg everywhere else
-  const bgClass = scrolled
+  // Check if we're on mobile
+  const isMobile = typeof window !== 'undefined' ? window.innerWidth < 768 : false;
+
+  // Solid black on mobile, transparent only on hero for desktop
+  const bgClass = (scrolled || isMobile)
     ? "bg-background border-b border-border"
     : "bg-transparent";
 
@@ -62,9 +91,9 @@ const Navbar = ({ onMobileNavigate }: NavbarProps) => {
             }
           }}
         >
-          <img 
-            src={logo} 
-            alt="Aurora Logo" 
+          <img
+            src={logo}
+            alt="Aurora Logo"
             className="h-8 w-8 object-contain"
           />
           <div className="font-display tracking-tight">
