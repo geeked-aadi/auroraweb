@@ -93,6 +93,15 @@
     @apply bg-card;
     box-shadow: 0 0 0 1px hsla(45, 75%, 52%, 0.05), 0 10px 30px -10px rgba(0,0,0,0.5);
   }
+
+  /* Hide scrollbar for elements with this class */
+  .hide-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none;    /* Firefox */
+  }
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none; /* Chrome, Safari and Opera */
+  }
 }
 
 @keyframes gold-pulse {
