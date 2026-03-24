@@ -16,13 +16,20 @@ interface NavbarProps {
 
 const Navbar = ({ onMobileNavigate }: NavbarProps) => {
   const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  const [lastScrollY, setLastScrollY] = useState(0);
   const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 50);
+    const onScroll = () => {
+      const currentY = window.scrollY;
+      setScrolled(currentY > 50);
+      setHidden(currentY > 100 && currentY > lastScrollY);
+      setLastScrollY(currentY);
+    };
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [lastScrollY]);
 
   const handleMobileClick = (index: number) => {
     if (onMobileNavigate) {
@@ -31,14 +38,17 @@ const Navbar = ({ onMobileNavigate }: NavbarProps) => {
     }
   };
 
+  // Transparent only on hero (not scrolled), black bg everywhere else
+  const bgClass = scrolled
+    ? "bg-background border-b border-border"
+    : "bg-transparent";
+
   return (
     <motion.nav
       initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.7, ease: [0.2, 0, 0, 1] }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled ? "bg-background/90 backdrop-blur-xl border-b border-border" : "bg-transparent"
-      }`}
+      animate={{ y: hidden && !mobileOpen ? -100 : 0 }}
+      transition={{ duration: 0.3, ease: "easeInOut" }}
+      className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-500 ${bgClass}`}
     >
       <div className="container mx-auto px-6 py-4 flex items-center justify-between">
         <a
