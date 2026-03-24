@@ -3,14 +3,18 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Phone } from "lucide-react";
 
 const navLinks = [
-  { label: "Services", href: "#services" },
-  { label: "Rooms", href: "#rooms" },
-  { label: "Offers", href: "#offers" },
-  { label: "Academy", href: "#academy" },
-  { label: "Contact", href: "#contact" },
+  { label: "Services", href: "#services", mobileIndex: 2 },
+  { label: "Rooms", href: "#rooms", mobileIndex: 3 },
+  { label: "Offers", href: "#offers", mobileIndex: 4 },
+  { label: "Academy", href: "#academy", mobileIndex: 5 },
+  { label: "Contact", href: "#contact", mobileIndex: 7 },
 ];
 
-const Navbar = () => {
+interface NavbarProps {
+  onMobileNavigate?: (index: number) => void;
+}
+
+const Navbar = ({ onMobileNavigate }: NavbarProps) => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -19,6 +23,13 @@ const Navbar = () => {
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  const handleMobileClick = (index: number) => {
+    if (onMobileNavigate) {
+      onMobileNavigate(index);
+      setMobileOpen(false);
+    }
+  };
 
   return (
     <motion.nav
@@ -30,7 +41,16 @@ const Navbar = () => {
       }`}
     >
       <div className="container mx-auto px-6 py-4 flex items-center justify-between">
-        <a href="#" className="font-display text-2xl font-light tracking-tight text-foreground">
+        <a
+          href="#"
+          className="font-display text-2xl font-light tracking-tight text-foreground"
+          onClick={(e) => {
+            if (onMobileNavigate) {
+              e.preventDefault();
+              onMobileNavigate(0);
+            }
+          }}
+        >
           <span className="text-primary">Aurora</span> Studio
         </a>
 
@@ -75,14 +95,13 @@ const Navbar = () => {
           >
             <div className="container mx-auto px-6 py-6 flex flex-col gap-4">
               {navLinks.map((link) => (
-                <a
+                <button
                   key={link.href}
-                  href={link.href}
-                  onClick={() => setMobileOpen(false)}
-                  className="font-body text-sm uppercase tracking-[0.2em] text-muted-foreground hover:text-primary transition-colors"
+                  onClick={() => handleMobileClick(link.mobileIndex)}
+                  className="font-body text-sm uppercase tracking-[0.2em] text-foreground hover:text-primary transition-colors text-left"
                 >
                   {link.label}
-                </a>
+                </button>
               ))}
               <a
                 href="tel:+919999999999"
