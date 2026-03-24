@@ -1,5 +1,6 @@
-import { useRef, useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { X, ChevronLeft, ChevronRight } from "lucide-react";
 
 const galleryImages = [
   { src: "/gallery/IMG_5881.jpg", alt: "Aurora Studio Gallery Image 1" },
@@ -15,60 +16,47 @@ const galleryImages = [
 ];
 
 const Gallery = () => {
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const [isHovering, setIsHovering] = useState(false);
-  const [dragStartX, setDragStartX] = useState<number | null>(null);
-  const [startScrollLeft, setStartScrollLeft] = useState<number>(0);
+  const [selectedImage, setSelectedImage] = useState<number | null>(null);
 
-  useEffect(() => {
-    if (isHovering || dragStartX !== null) return;
-
-    const frame = window.requestAnimationFrame(function scrollStep() {
-      const container = scrollContainerRef.current;
-      if (!container) return;
-
-      const maxScroll = container.scrollWidth / 2;
-      let next = container.scrollLeft + 0.5;
-      if (next >= maxScroll) next -= maxScroll;
-      container.scrollLeft = next;
-
-      window.requestAnimationFrame(scrollStep);
-    });
-
-    return () => window.cancelAnimationFrame(frame);
-  }, [isHovering, dragStartX]);
-
-  const handleMouseDown = (e: React.MouseEvent) => {
-    setDragStartX(e.clientX);
-    if (scrollContainerRef.current) setStartScrollLeft(scrollContainerRef.current.scrollLeft);
+  const openModal = (index: number) => {
+    setSelectedImage(index);
   };
 
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (dragStartX === null || !scrollContainerRef.current) return;
-    const delta = dragStartX - e.clientX;
-    scrollContainerRef.current.scrollLeft = startScrollLeft + delta;
+  const closeModal = () => {
+    setSelectedImage(null);
   };
 
-  const handleMouseUp = () => setDragStartX(null);
-  const handleTouchStart = (e: React.TouchEvent) => {
-    setDragStartX(e.touches[0].clientX);
-    if (scrollContainerRef.current) setStartScrollLeft(scrollContainerRef.current.scrollLeft);
+  const navigateImage = (direction: 'prev' | 'next') => {
+    if (selectedImage === null) return;
+
+    const newIndex = direction === 'next'
+      ? (selectedImage + 1) % galleryImages.length
+      : (selectedImage - 1 + galleryImages.length) % galleryImages.length;
+
+    setSelectedImage(newIndex);
   };
 
-  const handleTouchMove = (e: React.TouchEvent) => {
-    if (dragStartX === null || !scrollContainerRef.current) return;
-    const delta = dragStartX - e.touches[0].clientX;
-    scrollContainerRef.current.scrollLeft = startScrollLeft + delta;
+  const handleKeyDown = (e: KeyboardEvent) => {
+    if (selectedImage === null) return;
+
+    if (e.key === 'Escape') closeModal();
+    if (e.key === 'ArrowLeft') navigateImage('prev');
+    if (e.key === 'ArrowRight') navigateImage('next');
   };
 
-  const loopItems = [...galleryImages, ...galleryImages];
+  React.useEffect(() => {
+    if (selectedImage !== null) {
+      document.addEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
 
-  const scrollBy = (direction: number) => {
-    const container = scrollContainerRef.current;
-    if (!container) return;
-    const amount = container.clientWidth * 0.8;
-    container.scrollBy({ left: direction * amount, behavior: 'smooth' });
-  };
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = 'unset';
+    };
+  }, [selectedImage]);
 
   return (
     <section id="gallery" className="py-24 bg-card">
@@ -91,50 +79,23 @@ const Gallery = () => {
           Gallery
         </motion.h2>
 
-        {/* Auto-scroll carousel */}
-        <div className="relative group mx-auto max-w-7xl">
-          <button
-            onClick={() => scrollBy(-1)}
-            className="absolute left-2 top-1/2 -translate-y-1/2 z-20 p-2 rounded-full bg-background/90 border border-border text-foreground hover:bg-background transition-colors"
-            aria-label="Previous image"
-          >
-            ‹
-          </button>
-          <button
-            onClick={() => scrollBy(1)}
-            className="absolute right-2 top-1/2 -translate-y-1/2 z-20 p-2 rounded-full bg-background/90 border border-border text-foreground hover:bg-background transition-colors"
-            aria-label="Next image"
-          >
-            ›
-          </button>
-          <div className="absolute left-0 top-0 h-full w-16 bg-gradient-to-r from-card via-card/50 to-transparent z-10 pointer-events-none" />
-          <div className="absolute right-0 top-0 h-full w-16 bg-gradient-to-l from-card via-card/50 to-transparent z-10 pointer-events-none" />
-
-          <div
-            ref={scrollContainerRef}
-            onMouseEnter={() => setIsHovering(true)}
-            onMouseLeave={() => { setIsHovering(false); handleMouseUp(); }}
-            onMouseDown={handleMouseDown}
-            onMouseMove={handleMouseMove}
-            onMouseUp={handleMouseUp}
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleMouseUp}
-            className="flex gap-4 overflow-x-auto scroll-smooth pb-4 cursor-grab active:cursor-grabbing"
-            style={{
-              scrollBehavior: "smooth",
-              WebkitOverflowScrolling: "touch",
-            }}
-          >
-            {loopItems.map((image, index) => (
-              <div
-                key={`${image.alt}-${index}`}
-                className="flex-shrink-0 w-72 sm:w-80 md:w-96 aspect-video overflow-hidden rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300"
-              >
+        {/* Image Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 max-w-7xl mx-auto">
+          {galleryImages.map((image, index) => (
+            <motion.div
+              key={image.alt}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              className="group relative overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer"
+              onClick={() => openModal(index)}
+            >
+              <div className="aspect-square overflow-hidden">
                 <img
                   src={image.src}
                   alt={image.alt}
-                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                   loading="lazy"
                   onError={(e) => {
                     const target = e.currentTarget;
@@ -143,26 +104,94 @@ const Gallery = () => {
                   }}
                 />
               </div>
-            ))}
-          </div>
+              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
+                <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div className="bg-white/90 backdrop-blur-sm rounded-full p-3">
+                    <svg
+                      className="w-6 h-6 text-gray-800"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          ))}
         </div>
 
-        {/* Scroll indicator for mobile */}
-        <p className="text-xs text-muted-foreground text-center mt-6 md:hidden">
-          Auto-scrolling gallery • Hover to pause
-        </p>
-      </div>
+        {/* Modal/Lightbox */}
+        <AnimatePresence>
+          {selectedImage !== null && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-50 bg-black/90 backdrop-blur-sm flex items-center justify-center p-4"
+              onClick={closeModal}
+            >
+              <motion.div
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.8, opacity: 0 }}
+                transition={{ type: "spring", damping: 25, stiffness: 300 }}
+                className="relative max-w-4xl max-h-[90vh] w-full"
+                onClick={(e) => e.stopPropagation()}
+              >
+                {/* Close button */}
+                <button
+                  onClick={closeModal}
+                  className="absolute -top-12 right-0 text-white hover:text-gray-300 transition-colors z-10"
+                  aria-label="Close gallery"
+                >
+                  <X size={32} />
+                </button>
 
-      <style>{`
-        /* Hide scrollbar while maintaining functionality */
-        div::-webkit-scrollbar {
-          display: none;
-        }
-        div {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-        }
-      `}</style>
+                {/* Navigation buttons */}
+                <button
+                  onClick={() => navigateImage('prev')}
+                  className="absolute left-4 top-1/2 -translate-y-1/2 text-white hover:text-gray-300 transition-colors bg-black/50 hover:bg-black/70 rounded-full p-2 backdrop-blur-sm"
+                  aria-label="Previous image"
+                >
+                  <ChevronLeft size={24} />
+                </button>
+
+                <button
+                  onClick={() => navigateImage('next')}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-white hover:text-gray-300 transition-colors bg-black/50 hover:bg-black/70 rounded-full p-2 backdrop-blur-sm"
+                  aria-label="Next image"
+                >
+                  <ChevronRight size={24} />
+                </button>
+
+                {/* Main image */}
+                <img
+                  src={galleryImages[selectedImage].src}
+                  alt={galleryImages[selectedImage].alt}
+                  className="w-full h-full object-contain rounded-lg"
+                  onError={(e) => {
+                    const target = e.currentTarget;
+                    target.onerror = null;
+                    target.src = "/room-bridal.jpg";
+                  }}
+                />
+
+                {/* Image counter */}
+                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white bg-black/50 backdrop-blur-sm rounded-full px-4 py-2 text-sm">
+                  {selectedImage + 1} / {galleryImages.length}
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
     </section>
   );
 };

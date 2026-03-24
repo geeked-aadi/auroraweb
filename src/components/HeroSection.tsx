@@ -13,9 +13,10 @@ const HeroSection = () => {
           loop
           playsInline
           className="w-full h-full object-cover"
-          poster=""
+          poster="/hero-section-desktop.jpg"
         >
-          <source src="/hero-video.mp4" type="video/mp4" />
+          <source media="(max-width: 767px)" src="/hero-section-mobile.mp4" type="video/mp4" />
+          <source src="/hero-section-desktop.mp4" type="video/mp4" />
         </video>
         <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/30 to-background" />
       </div>
@@ -46,7 +47,7 @@ const HeroSection = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ ...transition, delay: 0.6 }}
-          className="font-body text-base md:text-lg text-muted-foreground max-w-xl mx-auto mb-10"
+          className="font-body text-base md:text-lg text-white max-w-xl mx-auto mb-10"
         >
           Experience the intersection of luxury spa treatments and elite beauty
           education. Men • Women • Children

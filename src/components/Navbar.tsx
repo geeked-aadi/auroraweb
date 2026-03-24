@@ -67,9 +67,12 @@ const Navbar = ({ onMobileNavigate }: NavbarProps) => {
             alt="Aurora Logo" 
             className="h-8 w-8 object-contain"
           />
-          <span className="font-display text-2xl font-light tracking-tight text-foreground">
-            <span className="text-primary">Aurora</span> Studio
-          </span>
+          <div className="font-display tracking-tight">
+            <span className="text-primary text-2xl font-light">Aurora</span>
+            <span className="block text-white text-xs uppercase tracking-wide font-semibold mt-0.5">
+              Makeup Studio & Academy
+            </span>
+          </div>
         </a>
 
         {/* Desktop */}
@@ -78,7 +81,7 @@ const Navbar = ({ onMobileNavigate }: NavbarProps) => {
             <a
               key={link.href}
               href={link.href}
-              className="font-body text-xs uppercase tracking-[0.2em] text-foreground hover:text-primary transition-colors duration-300"
+              className="font-body text-xs uppercase tracking-[0.2em] text-white hover:text-primary transition-colors duration-300"
             >
               {link.label}
             </a>
@@ -96,7 +99,7 @@ const Navbar = ({ onMobileNavigate }: NavbarProps) => {
         {/* Mobile toggle */}
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
-          className="md:hidden text-foreground"
+          className="md:hidden text-white"
         >
           {mobileOpen ? <X size={24} /> : <Menu size={24} />}
         </button>

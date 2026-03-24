@@ -1,6 +1,9 @@
 import { useRef, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Star, ChevronLeft, ChevronRight } from "lucide-react";
+import review1 from "@/assets/vidReviews/IMG_5936.MP4";
+import review2 from "@/assets/vidReviews/IMG_5937.MP4";
+import review3 from "@/assets/vidReviews/IMG_5938.MP4";
 
 const testimonials = [
   {
@@ -70,6 +73,16 @@ const testimonials = [
     review: "Ajar best haircut thanks ajar 👍✅. Coming aurora salon famil",
   },
 ];
+
+const videoReviews = [
+  { src: review1, title: "Aurora Review 1" },
+  { src: review2, title: "Aurora Review 2" },
+  { src: review3, title: "Aurora Review 3" },
+];
+
+const fallbackVideo = "/hero-video-1.mp4";
+
+const getVideoSrc = (videoSrc: string) => videoSrc;
 
 const TestimonialsSection = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -265,6 +278,53 @@ const TestimonialsSection = () => {
         <p className="text-xs text-muted-foreground text-center mt-6 md:hidden">
           Swipe to see more reviews
         </p>
+
+        {/* Video reviews block */}
+        <div className="mt-12">
+          <motion.h3
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="font-display text-3xl text-foreground mb-6 text-center"
+          >
+            Video Reviews
+          </motion.h3>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {videoReviews.map((video, index) => (
+              <motion.div
+                key={`${video.title}-${index}`}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: index * 0.1 }}
+                className="bg-background border border-border rounded-xl overflow-hidden shadow-sm"
+              >
+                <video
+                  controls
+                  className="w-full aspect-[9/16] object-cover"
+                  poster="/placeholder.svg"
+                  onError={(e) => {
+                    const target = e.currentTarget as HTMLVideoElement;
+                    if (target.dataset.fallback === "true") {
+                      return;
+                    }
+                    target.dataset.fallback = "true";
+                    target.src = fallbackVideo;
+                    target.load();
+                    target.play().catch(() => {});
+                  }}
+                >
+                  <source src={getVideoSrc(video.src)} type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+                <div className="p-4">
+                  <p className="font-display text-sm text-foreground font-semibold">{video.title}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
       </div>
 
       <style>{`

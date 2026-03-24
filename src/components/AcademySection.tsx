@@ -50,7 +50,7 @@ const AcademySection = () => {
 
         <div className="grid lg:grid-cols-2 gap-12 items-start">
           {/* Course list */}
-          <div>
+          <div className="order-2 lg:order-1">
             {courses.map((course, i) => (
               <motion.div
                 key={course.name}
@@ -96,7 +96,7 @@ const AcademySection = () => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7, ease: [0.2, 0, 0, 1] }}
-            className="hidden lg:block sticky top-32"
+            className="order-1 lg:order-2 lg:sticky lg:top-32"
           >
             <div className="overflow-hidden gold-border-glow">
               <img
