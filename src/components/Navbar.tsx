@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Phone, Instagram } from "lucide-react";
 import logo from "../assets/logo.png";
+import { bookingMessage, createWhatsAppUrl } from "@/lib/whatsapp";
 
 const navLinks = [
   { label: "Services", href: "#services", mobileIndex: 2 },
@@ -15,16 +16,17 @@ const instagramUrl = "https://www.instagram.com/aaurora2024/";
 
 interface NavbarProps {
   onMobileNavigate?: (index: number) => void;
+  onMobileVisibilityChange?: (isVisible: boolean) => void;
 }
 
-const Navbar = ({ onMobileNavigate }: NavbarProps) => {
+const Navbar = ({ onMobileNavigate, onMobileVisibilityChange }: NavbarProps) => {
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
-  const [lastScrollY, setLastScrollY] = useState(0);
   const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
     let timeoutId: ReturnType<typeof setTimeout>;
+    const mobileViewport = window.matchMedia("(max-width: 767px)");
 
     const handleUserActivity = () => {
       const currentY = window.scrollY;
@@ -36,18 +38,21 @@ const Navbar = ({ onMobileNavigate }: NavbarProps) => {
       // Clear any existing timeout
       clearTimeout(timeoutId);
 
-      // Only hide when idle if we are scrolled down a bit
-      if (currentY > 100) {
+      // On mobile, hide after idle regardless of page scroll.
+      // On desktop, keep existing behavior (hide only after scrolling down).
+      const shouldHideOnIdle = mobileViewport.matches || currentY > 100;
+      if (shouldHideOnIdle) {
         timeoutId = setTimeout(() => {
           // If the mobile menu isn't open, hide the navbar
           setHidden(true);
-        }, 3000); // 3 seconds of idle time
+        }, 1000); // 1 second of idle time
       }
     };
 
     window.addEventListener("scroll", handleUserActivity);
     window.addEventListener("mousemove", handleUserActivity);
     window.addEventListener("touchstart", handleUserActivity);
+    window.addEventListener("touchmove", handleUserActivity);
 
     // Initial setup
     handleUserActivity();
@@ -56,6 +61,7 @@ const Navbar = ({ onMobileNavigate }: NavbarProps) => {
       window.removeEventListener("scroll", handleUserActivity);
       window.removeEventListener("mousemove", handleUserActivity);
       window.removeEventListener("touchstart", handleUserActivity);
+      window.removeEventListener("touchmove", handleUserActivity);
       clearTimeout(timeoutId);
     };
   }, []);
@@ -74,13 +80,21 @@ const Navbar = ({ onMobileNavigate }: NavbarProps) => {
   const bgClass = (scrolled || isMobile)
     ? "bg-background border-b border-border"
     : "bg-transparent";
+  const hiddenMobileClass =
+    hidden && !mobileOpen && isMobile ? "opacity-0 border-transparent bg-transparent" : "opacity-100";
+  const isMobileNavVisible = !(hidden && !mobileOpen);
+
+  useEffect(() => {
+    if (!isMobile || !onMobileVisibilityChange) return;
+    onMobileVisibilityChange(isMobileNavVisible);
+  }, [isMobile, isMobileNavVisible, onMobileVisibilityChange]);
 
   return (
     <motion.nav
-      initial={{ y: -100 }}
-      animate={{ y: hidden && !mobileOpen ? -100 : 0 }}
+      initial={{ y: "-100%" }}
+      animate={{ y: hidden && !mobileOpen ? "-100%" : 0 }}
       transition={{ duration: 0.3, ease: "easeInOut" }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-500 ${bgClass}`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300 ${bgClass} ${hiddenMobileClass}`}
     >
       <div className="container mx-auto px-6 py-4 flex items-center justify-between">
         <a
@@ -118,7 +132,7 @@ const Navbar = ({ onMobileNavigate }: NavbarProps) => {
             </a>
           ))}
           <a
-            href="https://wa.me/916361388923"
+            href={createWhatsAppUrl(bookingMessage("an appointment"))}
             target="_blank"
             rel="noopener noreferrer"
             className="ml-4 px-6 py-2.5 bg-primary text-primary-foreground font-body text-xs uppercase tracking-[0.15em] font-medium hover:bg-primary/90 transition-colors animate-gold-pulse"

@@ -27,6 +27,7 @@ const sections = [
 const Index = () => {
   const isMobile = useIsMobile();
   const [activeSection, setActiveSection] = useState(0);
+  const [isMobileNavVisible, setIsMobileNavVisible] = useState(true);
 
   // Listen for hash changes from navbar
   useEffect(() => {
@@ -80,8 +81,15 @@ const Index = () => {
 
   return (
     <div className="h-screen bg-background overflow-hidden relative">
-      <Navbar onMobileNavigate={setActiveSection} />
-      <div className="pt-16 h-full overflow-y-auto">
+      <Navbar
+        onMobileNavigate={setActiveSection}
+        onMobileVisibilityChange={setIsMobileNavVisible}
+      />
+      <div
+        className={`h-full overflow-y-auto transition-all duration-300 ${
+          isMobileNavVisible ? "pt-16" : "pt-0"
+        }`}
+      >
         <ActiveComponent />
         {/* Render Testimonials immediately after Academy on Mobile */}
         {activeSection === 5 && <TestimonialsSection />}

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Sparkles } from "lucide-react";
+import { createWhatsAppUrl, offerClaimMessage } from "@/lib/whatsapp";
 
 const offers = [
   {
@@ -127,7 +128,7 @@ const OffersSection = () => {
                 </div>
 
                 <a
-                  href="https://wa.me/916361388923"
+                  href={createWhatsAppUrl(offerClaimMessage(offer.title))}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-block px-8 py-3 bg-primary text-primary-foreground font-body text-xs uppercase tracking-[0.15em] font-semibold hover:bg-primary/90 transition-colors"

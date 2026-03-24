@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Clock } from "lucide-react";
+import { bookingMessage, createWhatsAppUrl } from "@/lib/whatsapp";
 
 type ServiceItem = {
   name: string;
@@ -119,7 +120,7 @@ const ServicesSection = () => {
                   <Clock size={12} /> {service.duration}
                 </p>
                 <a
-                  href="https://wa.me/916361388923"
+                  href={createWhatsAppUrl(bookingMessage(`for ${service.name} (${service.price})`))}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="mt-6 inline-block font-body text-xs uppercase tracking-widest text-foreground border-b border-border pb-1 hover:border-primary hover:text-primary transition-colors"
