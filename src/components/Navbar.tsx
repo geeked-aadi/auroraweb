@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Phone } from "lucide-react";
+import { Menu, X, Phone, Instagram } from "lucide-react";
 import logo from "../assets/logo.png";
 
 const navLinks = [
@@ -10,6 +10,8 @@ const navLinks = [
   { label: "Academy & Reviews", href: "#academy", mobileIndex: 5 },
   { label: "Contact", href: "#contact", mobileIndex: 7 },
 ];
+
+const instagramUrl = "https://www.instagram.com/aaurora2024/";
 
 interface NavbarProps {
   onMobileNavigate?: (index: number) => void;
@@ -123,6 +125,15 @@ const Navbar = ({ onMobileNavigate }: NavbarProps) => {
           >
             Book Now
           </a>
+          <a
+            href={instagramUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Aurora Instagram"
+            className="text-white hover:text-primary transition-colors"
+          >
+            <Instagram size={18} />
+          </a>
         </div>
 
         {/* Mobile toggle */}
@@ -158,6 +169,14 @@ const Navbar = ({ onMobileNavigate }: NavbarProps) => {
                 className="flex items-center gap-2 text-primary font-body text-sm"
               >
                 <Phone size={16} /> Call Now
+              </a>
+              <a
+                href={instagramUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 text-primary font-body text-sm"
+              >
+                <Instagram size={16} /> @aaurora2024
               </a>
             </div>
           </motion.div>

@@ -92,9 +92,16 @@ const TestimonialsSection = () => {
   // VIDEO CAROUSEL STATES
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const [playing, setPlaying] = useState(false);
+  const [featuredLoaded, setFeaturedLoaded] = useState(false);
+  const [queueLoaded, setQueueLoaded] = useState<boolean[]>(new Array(videoReviews.length).fill(false));
 
   const featuredRef = useRef<HTMLVideoElement>(null);
   const queueRefs = useRef<(HTMLVideoElement | null)[]>([]);
+
+  // Reset featured loader when active video changes
+  useEffect(() => {
+    setFeaturedLoaded(false);
+  }, [activeIndex]);
 
   // Auto-scroll effect for written testimonials
   useEffect(() => {
@@ -311,11 +318,19 @@ const TestimonialsSection = () => {
                 transition={{ duration: 0.35, ease: [0.2, 0, 0, 1] }}
                 className="relative flex-shrink-0 w-full md:w-[340px] lg:w-[380px] rounded-2xl overflow-hidden shadow-2xl border border-border bg-background"
               >
+                {/* Skeleton Loader for Featured Video */}
+                {!featuredLoaded && (
+                  <div className="absolute inset-0 bg-muted animate-pulse flex items-center justify-center z-10">
+                    <div className="w-8 h-8 rounded-full border-2 border-primary border-t-transparent animate-spin" />
+                  </div>
+                )}
+
                 <video
                   ref={featuredRef}
                   src={videoReviews[activeIndex].src}
-                  className="w-full aspect-[9/16] object-cover"
+                  className={`w-full aspect-[9/16] object-cover transition-opacity duration-500 ${featuredLoaded ? 'opacity-100' : 'opacity-0'}`}
                   playsInline
+                  onLoadedData={() => setFeaturedLoaded(true)}
                   onPlay={() => setPlaying(true)}
                   onPause={() => setPlaying(false)}
                   onEnded={() => setPlaying(false)}
@@ -368,14 +383,26 @@ const TestimonialsSection = () => {
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                   >
+                    {/* Skeleton Loader for Queue Video */}
+                    {!queueLoaded[originalIndex] && (
+                      <div className="absolute inset-0 bg-muted animate-pulse z-10" />
+                    )}
+
                     {/* Thumbnail via video element (first frame) */}
                     <video
                       ref={(el) => (queueRefs.current[originalIndex] = el)}
                       src={video.src}
-                      className="w-full h-full object-cover"
+                      className={`w-full h-full object-cover transition-opacity duration-500 ${queueLoaded[originalIndex] ? 'opacity-100' : 'opacity-0'}`}
                       muted
                       playsInline
                       preload="metadata"
+                      onLoadedData={() => {
+                        setQueueLoaded((prev) => {
+                          const next = [...prev];
+                          next[originalIndex] = true;
+                          return next;
+                        });
+                      }}
                     />
 
                     {/* Dark overlay */}
