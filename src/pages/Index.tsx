@@ -3,7 +3,7 @@ import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import CategoryHighlight from "@/components/CategoryHighlight";
 import ServicesSection from "@/components/ServicesSection";
-import PremiumRooms from "@/components/PremiumRooms";
+import Gallery from "@/components/Gallery";
 import OffersSection from "@/components/OffersSection";
 import AcademySection from "@/components/AcademySection";
 import TestimonialsSection from "@/components/TestimonialsSection";
@@ -16,7 +16,7 @@ const sections = [
   { id: "hero", component: HeroSection },
   { id: "categories", component: CategoryHighlight },
   { id: "services", component: ServicesSection },
-  { id: "rooms", component: PremiumRooms },
+  { id: "gallery", component: Gallery },
   { id: "offers", component: OffersSection },
   { id: "academy", component: AcademySection },
   { id: "testimonials", component: TestimonialsSection },
@@ -39,7 +39,7 @@ const Index = () => {
         hero: 0,
         categories: 1,
         services: 2,
-        rooms: 3,
+        gallery: 3,
         offers: 4,
         academy: 5,
         testimonials: 6,
@@ -64,7 +64,7 @@ const Index = () => {
         <HeroSection />
         <CategoryHighlight />
         <ServicesSection />
-        <PremiumRooms />
+        <Gallery />
         <OffersSection />
         <AcademySection />
         <TestimonialsSection />

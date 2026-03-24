@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Phone } from "lucide-react";
+import logo from "../assets/logo.png";
 
 const navLinks = [
   { label: "Services", href: "#services", mobileIndex: 2 },
-  { label: "Rooms", href: "#rooms", mobileIndex: 3 },
+  { label: "Gallery", href: "#gallery", mobileIndex: 3 },
   { label: "Offers", href: "#offers", mobileIndex: 4 },
   { label: "Academy", href: "#academy", mobileIndex: 5 },
   { label: "Contact", href: "#contact", mobileIndex: 7 },
@@ -53,7 +54,7 @@ const Navbar = ({ onMobileNavigate }: NavbarProps) => {
       <div className="container mx-auto px-6 py-4 flex items-center justify-between">
         <a
           href="#"
-          className="font-display text-2xl font-light tracking-tight text-foreground"
+          className="flex items-center gap-3"
           onClick={(e) => {
             if (onMobileNavigate) {
               e.preventDefault();
@@ -61,7 +62,14 @@ const Navbar = ({ onMobileNavigate }: NavbarProps) => {
             }
           }}
         >
-          <span className="text-primary">Aurora</span> Studio
+          <img 
+            src={logo} 
+            alt="Aurora Logo" 
+            className="h-8 w-8 object-contain"
+          />
+          <span className="font-display text-2xl font-light tracking-tight text-foreground">
+            <span className="text-primary">Aurora</span> Studio
+          </span>
         </a>
 
         {/* Desktop */}
@@ -76,7 +84,7 @@ const Navbar = ({ onMobileNavigate }: NavbarProps) => {
             </a>
           ))}
           <a
-            href="https://wa.me/919999999999"
+            href="https://wa.me/916361388923"
             target="_blank"
             rel="noopener noreferrer"
             className="ml-4 px-6 py-2.5 bg-primary text-primary-foreground font-body text-xs uppercase tracking-[0.15em] font-medium hover:bg-primary/90 transition-colors animate-gold-pulse"
@@ -114,7 +122,7 @@ const Navbar = ({ onMobileNavigate }: NavbarProps) => {
                 </button>
               ))}
               <a
-                href="tel:+919999999999"
+                href="tel:+916361388923"
                 className="flex items-center gap-2 text-primary font-body text-sm"
               >
                 <Phone size={16} /> Call Now

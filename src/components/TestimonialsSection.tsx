@@ -1,14 +1,163 @@
+import { useRef, useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Star } from "lucide-react";
+import { Star, ChevronLeft, ChevronRight } from "lucide-react";
 
 const testimonials = [
-  { name: "Priya Sharma", text: "The bridal makeup was absolutely stunning. Everyone at the wedding couldn't stop complimenting my look. Truly world-class service.", rating: 5 },
-  { name: "Rahul Verma", text: "Best grooming experience I've ever had. The premium room, the attention to detail — it's a different league entirely.", rating: 5 },
-  { name: "Anita Desai", text: "I enrolled my daughter in the makeup course. The professional training and provided products make it excellent value.", rating: 5 },
-  { name: "Vikram Singh", text: "The keratin treatment here transformed my hair completely. Six months later and it still looks incredible.", rating: 5 },
+  {
+    name: "Vinayaka GC",
+    rating: 5,
+    date: "04 Apr 2025",
+    review: "My experience at Aurora Unisex Salon Makeup Studio and Academy was exceptional! The staff is highly skilled and attentive, ensuring a personalized touch. Their great offers on makeup services and packages make luxury affordable.",
+  },
+  {
+    name: "Prashanth. S. M",
+    rating: 5,
+    date: "17 Mar 2025",
+    review: "I recently visited Aurora beauty and salon, Studios and had a fantastic experience! The staff were incredibly friendly and professional, making me feel welcomed right from the start.",
+  },
+  {
+    name: "NETHRA",
+    rating: 5,
+    date: "18 May 2024",
+    review: "Aurora Unisex Salon Makeup Studio and Academy exceeded my expectations with its high-quality products, great offers, and luxurious vibe. The clean equipment and experienced staff made me feel pampered.",
+  },
+  {
+    name: "Mubarak Hc",
+    rating: 5,
+    date: "24 Apr 2024",
+    review: "Aurora Unisex Salon Makeup Studio and Academy is a top-notch beauty destination. The salon is hygienic, uses clean equipment, and offers reasonably priced services with great offers.",
+  },
+  {
+    name: "Vinayak Joshi",
+    rating: 5,
+    date: "23 Apr 2024",
+    review: "Step into luxury and relaxation at Aurora Unisex Salon Makeup Studio and Academy. The highly professional staff ensures a hygienic salon environment while providing top-notch beauty services.",
+  },
+  {
+    name: "Pavan Rathod",
+    rating: 5,
+    date: "25 Jul 2024",
+    review: "Great service I like that atmosphere staff also treat like to family and also great offers this salon was very hygienic",
+  },
+  {
+    name: "SIDDANAGOWDA",
+    rating: 5,
+    date: "23 Apr 2024",
+    review: "Experience excellence at Aurora Unisex Salon Makeup Studio and Academy! They offer reasonably priced services with great offers. The salon is hygienic, with clean equipment.",
+  },
+  {
+    name: "Yuvarajakumar Sannappanavar",
+    rating: 5,
+    date: "23 Apr 2024",
+    review: "Aurora Unisex Salon Makeup Studio and Academy is a very clean and hygienic salon. I always feel comfortable getting my hair and makeup done here.",
+  },
+  {
+    name: "Rithika",
+    rating: 5,
+    date: "22 Jul 2025",
+    review: "Ramya did good job. I really liked her work",
+  },
+  {
+    name: "Khushi.Cl",
+    rating: 5,
+    date: "12 Jul 2025",
+    review: "The service was good... And Ramya did very well eyebrows I'm impressed",
+  },
+  {
+    name: "MD Keyamuddin",
+    rating: 5,
+    date: "22 Mar 2025",
+    review: "Ajar best haircut thanks ajar 👍✅. Coming aurora salon famil",
+  },
 ];
 
 const TestimonialsSection = () => {
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [isHovering, setIsHovering] = useState(false);
+  const [scrollPosition, setScrollPosition] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragStart, setDragStart] = useState(0);
+
+  // Auto-scroll effect
+  useEffect(() => {
+    if (isHovering || isDragging) return;
+
+    const interval = setInterval(() => {
+      if (scrollContainerRef.current) {
+        const container = scrollContainerRef.current;
+        const scrollWidth = container.scrollWidth;
+        const clientWidth = container.clientWidth;
+        const maxScroll = scrollWidth - clientWidth;
+
+        setScrollPosition((prev) => {
+          let newPos = prev + 1; // Slow smooth scroll
+          if (newPos > maxScroll) {
+            newPos = 0; // Reset to start for infinite loop
+          }
+          container.scrollLeft = newPos;
+          return newPos;
+        });
+      }
+    }, 30); // Smooth scroll at ~30ms intervals
+
+    return () => clearInterval(interval);
+  }, [isHovering, isDragging]);
+
+  // Mouse drag handling
+  const handleMouseDown = (e: React.MouseEvent) => {
+    setIsDragging(true);
+    setDragStart(e.clientX - (scrollContainerRef.current?.scrollLeft || 0));
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging) return;
+    e.preventDefault();
+    const x = e.clientX - dragStart;
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollLeft = x;
+      setScrollPosition(x);
+    }
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovering(false);
+    handleMouseUp();
+  };
+
+  // Touch swipe handling
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setIsDragging(true);
+    setDragStart(e.touches[0].clientX - (scrollContainerRef.current?.scrollLeft || 0));
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (!isDragging) return;
+    const x = e.touches[0].clientX - dragStart;
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollLeft = x;
+      setScrollPosition(x);
+    }
+  };
+
+  const handleTouchEnd = () => {
+    setIsDragging(false);
+  };
+
+  // Manual navigation
+  const scroll = (direction: "left" | "right") => {
+    if (scrollContainerRef.current) {
+      const scrollAmount = 400;
+      scrollContainerRef.current.scrollBy({
+        left: direction === "left" ? -scrollAmount : scrollAmount,
+        behavior: "smooth",
+      });
+    }
+  };
+
   return (
     <section className="py-24 bg-card">
       <div className="container mx-auto px-6">
@@ -27,32 +176,107 @@ const TestimonialsSection = () => {
           transition={{ duration: 0.7, ease: [0.2, 0, 0, 1] }}
           className="font-display text-4xl md:text-5xl font-light text-center text-foreground mb-16 tracking-tight"
         >
-          Client Stories
+          What Our Clients Say
         </motion.h2>
 
-        <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-          {testimonials.map((t, i) => (
-            <motion.div
-              key={t.name}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
-              className="surface-elevated p-8"
-            >
-              <div className="flex gap-1 mb-4">
-                {Array.from({ length: t.rating }).map((_, j) => (
-                  <Star key={j} size={14} className="fill-primary text-primary" />
-                ))}
-              </div>
-              <p className="font-body text-sm text-muted-foreground leading-relaxed mb-6">
-                "{t.text}"
-              </p>
-              <p className="font-display text-foreground">{t.name}</p>
-            </motion.div>
-          ))}
+        {/* Scrollable testimonials container */}
+        <div className="relative group mx-auto max-w-7xl">
+          {/* Left fade gradient */}
+          <div className="absolute left-0 top-0 h-full w-16 bg-gradient-to-r from-card via-card/50 to-transparent z-10 pointer-events-none" />
+
+          {/* Right fade gradient */}
+          <div className="absolute right-0 top-0 h-full w-16 bg-gradient-to-l from-card via-card/50 to-transparent z-10 pointer-events-none" />
+
+          {/* Left navigation button */}
+          <button
+            onClick={() => scroll("left")}
+            className="absolute -left-6 top-1/2 -translate-y-1/2 z-20 p-2 rounded-full bg-primary text-primary-foreground hover:bg-primary/90 transition-all opacity-0 group-hover:opacity-100 hidden md:flex items-center justify-center"
+            aria-label="Scroll left"
+          >
+            <ChevronLeft size={20} />
+          </button>
+
+          {/* Right navigation button */}
+          <button
+            onClick={() => scroll("right")}
+            className="absolute -right-6 top-1/2 -translate-y-1/2 z-20 p-2 rounded-full bg-primary text-primary-foreground hover:bg-primary/90 transition-all opacity-0 group-hover:opacity-100 hidden md:flex items-center justify-center"
+            aria-label="Scroll right"
+          >
+            <ChevronRight size={20} />
+          </button>
+
+          {/* Scrollable container */}
+          <div
+            ref={scrollContainerRef}
+            onMouseEnter={() => setIsHovering(true)}
+            onMouseLeave={handleMouseLeave}
+            onMouseDown={handleMouseDown}
+            onMouseMove={handleMouseMove}
+            onMouseUp={handleMouseUp}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+            className="flex gap-6 overflow-x-auto scroll-smooth pb-4 cursor-grab active:cursor-grabbing"
+            style={{
+              scrollBehavior: isDragging ? "auto" : "smooth",
+              WebkitOverflowScrolling: "touch",
+            }}
+          >
+            {/* Render testimonials twice for seamless infinite loop */}
+            {[...testimonials, ...testimonials].map((testimonial, index) => (
+              <a
+                href="https://www.justdial.com/Davangere/Aurora-Unisex-Salon-Makeup-Studio-and-Academy-Near-Hemavtahi-Hostel-Siddaveerappa-Layout/9999P8192-8192-240119144253-J6C2_BZDET"
+                target="_blank"
+                rel="noopener noreferrer"
+                key={`${testimonial.name}-${index}`}
+                className="flex-shrink-0 w-72 sm:w-80 md:w-96"
+              >
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: false }}
+                  transition={{ duration: 0.5 }}
+                  className="h-full p-6 bg-background rounded-lg border border-border shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300 cursor-pointer"
+                >
+                  {/* Rating */}
+                  <div className="flex gap-1 mb-3">
+                    {Array.from({ length: testimonial.rating }).map((_, j) => (
+                      <Star key={j} size={16} className="fill-primary text-primary" />
+                    ))}
+                  </div>
+
+                  {/* Review text */}
+                  <p className="font-body text-sm text-muted-foreground leading-relaxed mb-4 line-clamp-3">
+                    "{testimonial.review}"
+                  </p>
+
+                  {/* Name and date */}
+                  <div className="border-t border-border pt-4">
+                    <p className="font-display text-foreground font-semibold">{testimonial.name}</p>
+                    <p className="font-body text-xs text-muted-foreground">{testimonial.date}</p>
+                  </div>
+                </motion.div>
+              </a>
+            ))}
+          </div>
         </div>
+
+        {/* Scroll indicator for mobile */}
+        <p className="text-xs text-muted-foreground text-center mt-6 md:hidden">
+          Swipe to see more reviews
+        </p>
       </div>
+
+      <style>{`
+        /* Hide scrollbar while maintaining functionality */
+        div::-webkit-scrollbar {
+          display: none;
+        }
+        div {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+      `}</style>
     </section>
   );
 };

@@ -127,7 +127,7 @@ const OffersSection = () => {
                 </div>
 
                 <a
-                  href="https://wa.me/919999999999"
+                  href="https://wa.me/916361388923"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-block px-8 py-3 bg-primary text-primary-foreground font-body text-xs uppercase tracking-[0.15em] font-semibold hover:bg-primary/90 transition-colors"

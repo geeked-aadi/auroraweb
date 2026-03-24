@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, BadgeCheck } from "lucide-react";
-import academyImg from "@/assets/academy.jpg";
+import academyImg from "@/assets/academy-small.jpg";
 
 const courses = [
   { name: "Makeup Artistry (Basic to Advanced)", duration: "3 Months", fee: "₹30,000" },
@@ -73,7 +73,7 @@ const AcademySection = () => {
                 <AnimatePresence>
                   {hoveredIndex === i && (
                     <motion.a
-                      href="https://wa.me/919999999999"
+                      href="https://wa.me/916361388923"
                       target="_blank"
                       rel="noopener noreferrer"
                       initial={{ opacity: 0, x: 20 }}

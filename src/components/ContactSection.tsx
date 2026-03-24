@@ -10,7 +10,7 @@ const ContactSection = () => {
     const msg = encodeURIComponent(
       `Hi Aurora Studio! I'd like to book:\nName: ${form.name}\nService: ${form.service}\nDate: ${form.date}\nPhone: ${form.phone}`
     );
-    window.open(`https://wa.me/919999999999?text=${msg}`, "_blank");
+    window.open(`https://wa.me/916361388923?text=${msg}`, "_blank");
   };
 
   return (
@@ -85,9 +85,10 @@ const ContactSection = () => {
               <div>
                 <h3 className="font-display text-lg text-foreground mb-1">Location</h3>
                 <p className="font-body text-sm text-muted-foreground">
-                  Aurora Makeup Studio & Academy<br />
-                  Main Road, City Center<br />
-                  Your City, State - 000000
+                  Aurora Makeup Studio<br />
+                  College Rd, opp. JH Patel College<br />
+                  Siddaveerappa Badavane, BIET<br />
+                  Davanagere, Karnataka 577004
                 </p>
               </div>
             </div>
@@ -95,8 +96,8 @@ const ContactSection = () => {
               <Phone size={20} className="text-primary mt-1 shrink-0" />
               <div>
                 <h3 className="font-display text-lg text-foreground mb-1">Call Us</h3>
-                <a href="tel:+919999999999" className="font-body text-sm text-primary hover:underline">
-                  +91 99999 99999
+                <a href="tel:+916361388923" className="font-body text-sm text-primary hover:underline">
+                  +91 63613 88923
                 </a>
               </div>
             </div>
@@ -114,7 +115,7 @@ const ContactSection = () => {
             {/* Map placeholder */}
             <div className="aspect-video bg-card border border-border overflow-hidden">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3770!2d72.8!3d19.07!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTnCsDA0JzEyLjAiTiA3MsKwNDgnMDAuMCJF!5e0!3m2!1sen!2sin!4v1234567890"
+                src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBFqPwQJa7g_h0j-h4A6wFZ8-7Ij0x2C5c&q=Aurora+Makeup+Studio,+College+Road,+Davanagere,+Karnataka"
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}

@@ -119,7 +119,7 @@ const ServicesSection = () => {
                   <Clock size={12} /> {service.duration}
                 </p>
                 <a
-                  href="https://wa.me/919999999999"
+                  href="https://wa.me/916361388923"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="mt-6 inline-block font-body text-xs uppercase tracking-widest text-foreground border-b border-border pb-1 hover:border-primary hover:text-primary transition-colors"
