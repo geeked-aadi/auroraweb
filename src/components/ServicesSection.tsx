@@ -114,7 +114,8 @@ const ServicesSection = () => {
                   {service.name}
                 </h3>
                 <p className="flex items-center gap-1.5 text-muted-foreground text-sm mt-1">
-                  <Clock size={12} /> {service.duration}
+                  
+                  
                 </p>
                 <a
                   href={createWhatsAppUrl(bookingMessage(`for ${service.name} (${service.price})`))}
