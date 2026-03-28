@@ -5,14 +5,17 @@ import academyImg from "@/assets/academy-small.jpg";
 import { createWhatsAppUrl, enrollMessage } from "@/lib/whatsapp";
 
 const courses = [
-  { name: "Makeup Artistry (Basic to Advanced)", duration: "3 Months", fee: "₹30,000" },
-  { name: "Hairstyling Professional", duration: "2 Months", fee: "₹25,000" },
-  { name: "Saree Draping Masterclass", duration: "2 Weeks", fee: "₹5,000" },
-  { name: "Nail Art Workshop", duration: "1 Week", fee: "₹3,000" },
-  { name: "Mehendi Design Workshop", duration: "1 Week", fee: "₹3,000" },
-  { name: "Photography Skills", duration: "1 Month", fee: "₹10,000" },
-  { name: "Portfolio Shoot Training", duration: "2 Weeks", fee: "₹8,000" },
-  { name: "Social Media Marketing", duration: "1 Month", fee: "₹7,000" },
+  { name: "Basic to Advanced Makeup"},
+  { name: "Basic to Advanced Hairstyle"},
+  { name: "All types of Draping"},
+  { name: "Nail Art Workshop"},
+  { name: "Floral workshop",},
+  { name: "Photography Skills",},
+  { name: "Portfolio Shoot Training" },
+  { name: "Mehandi Workshop"},
+  { name: "Client Management" },
+  { name: "MUA Appearance" },
+  { name: "Air Brush Makeup" },
 ];
 
 const AcademySection = () => {
@@ -67,9 +70,7 @@ const AcademySection = () => {
                   <h3 className="font-display text-lg text-foreground group-hover:text-primary transition-colors">
                     {course.name}
                   </h3>
-                  <p className="font-body text-xs text-muted-foreground mt-1">
-                    {course.duration} • {course.fee}
-                  </p>
+                  
                 </div>
                 <AnimatePresence>
                   {hoveredIndex === i && (

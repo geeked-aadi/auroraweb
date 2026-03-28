@@ -4,7 +4,7 @@ const transition = { duration: 0.7, ease: [0.2, 0, 0, 1] as const };
 
 const HeroSection = () => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-screen flex items-center justify-center ">
       {/* Background Video */}
       <div className="absolute inset-0">
         <video
@@ -50,7 +50,8 @@ const HeroSection = () => {
           className="font-body text-base md:text-lg text-white max-w-xl mx-auto mb-10"
         >
           Experience the intersection of luxury spa treatments and elite beauty
-          education. Men • Women • Children
+          education. 
+          Men • Women • Children
         </motion.p>
 
         <motion.div
@@ -66,10 +67,10 @@ const HeroSection = () => {
             Book Appointment
           </a>
           <a
-            href="#offers"
+            href="#services"
             className="px-10 py-4 border border-primary/40 text-primary font-body text-xs uppercase tracking-[0.2em] font-medium hover:bg-primary/10 transition-all"
           >
-            View Offers
+            View Services
           </a>
         </motion.div>
       </div>

@@ -11,27 +11,27 @@ const categories = [
 
 const CategoryHighlight = () => {
   return (
-    <section className="py-24 bg-background">
-      <div className="container mx-auto px-6">
+    <section className="py-10 md:py-24 bg-background" id='categoryHighlight'>
+      <div className="container mx-auto px-4 md:px-6">
         <motion.p
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          className="font-body text-xs uppercase tracking-[0.4em] text-primary text-center mb-4"
+          className="font-body text-[10px] md:text-xs uppercase tracking-[0.3em] text-primary text-center mb-2"
         >
           Family Salon
         </motion.p>
+
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.7, ease: [0.2, 0, 0, 1] }}
-          className="font-display text-4xl md:text-5xl font-light text-center text-foreground mb-16 tracking-tight"
+          className="font-display text-3xl md:text-5xl font-light text-center text-foreground mb-8 md:mb-16"
         >
           For Everyone
         </motion.h2>
 
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-6">
           {categories.map((cat, i) => (
             <motion.a
               key={cat.title}
@@ -39,22 +39,21 @@ const CategoryHighlight = () => {
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.7, ease: [0.2, 0, 0, 1], delay: i * 0.15 }}
-              whileHover={{ y: -8 }}
-              className="group relative overflow-hidden aspect-[3/4] cursor-pointer"
+              transition={{ delay: i * 0.15 }}
+              className="group relative overflow-hidden aspect-[4/3] md:aspect-[3/4]"
             >
               <img
                 src={cat.image}
                 alt={cat.title}
-                className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
+                className="w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent" />
-              <div className="absolute inset-0 border border-transparent group-hover:border-primary/30 transition-colors duration-500" />
-              <div className="absolute bottom-0 left-0 right-0 p-8">
-                <p className="font-body text-xs uppercase tracking-[0.3em] text-primary mb-2">
+
+              <div className="absolute bottom-0 left-0 right-0 p-5">
+                <p className="font-body text-[10px] uppercase tracking-[0.2em] text-primary mb-1">
                   {cat.subtitle}
                 </p>
-                <h3 className="font-display text-3xl font-light text-foreground">
+                <h3 className="font-display text-2xl text-foreground">
                   {cat.title}
                 </h3>
               </div>

@@ -6,26 +6,23 @@ import { bookingMessage, createWhatsAppUrl } from "@/lib/whatsapp";
 type ServiceItem = {
   name: string;
   price: string;
-  duration: string;
   category: string;
   gender: "men" | "women" | "all";
 };
 
 const services: ServiceItem[] = [
-  { name: "Classic Haircut", price: "₹399", duration: "30 min", category: "Haircut & Styling", gender: "all" },
-  { name: "Premium Styling", price: "₹799", duration: "45 min", category: "Haircut & Styling", gender: "all" },
-  { name: "Hair Color", price: "₹1,499", duration: "90 min", category: "Haircut & Styling", gender: "all" },
-  { name: "Beard Sculpting", price: "₹299", duration: "20 min", category: "Beard & Grooming", gender: "men" },
-  { name: "Royal Shave", price: "₹499", duration: "30 min", category: "Beard & Grooming", gender: "men" },
-  { name: "Gold Facial", price: "₹999", duration: "45 min", category: "Facial & Skin", gender: "all" },
-  { name: "Diamond Facial", price: "₹1,999", duration: "60 min", category: "Facial & Skin", gender: "women" },
-  { name: "D-Tan Treatment", price: "₹599", duration: "30 min", category: "Facial & Skin", gender: "all" },
-  { name: "Aroma Therapy", price: "₹1,499", duration: "60 min", category: "Spa & Relaxation", gender: "all" },
-  { name: "Hot Stone Massage", price: "₹2,499", duration: "90 min", category: "Spa & Relaxation", gender: "all" },
-  { name: "Bridal Makeup", price: "₹15,000", duration: "120 min", category: "Bridal Makeup", gender: "women" },
-  { name: "Pre-Bridal Package", price: "₹8,999", duration: "180 min", category: "Bridal Makeup", gender: "women" },
-  { name: "Keratin Treatment", price: "₹4,999", duration: "120 min", category: "Keratin & Smoothening", gender: "all" },
-  { name: "Hair Smoothening", price: "₹3,999", duration: "90 min", category: "Keratin & Smoothening", gender: "all" },
+  { name: "Haircut Beared D-Tan", price: "₹399", category: "Haircut & Styling", gender: "men" },
+  { name: "Haircut Beared", price: "₹199", category: "Haircut & Styling", gender: "men" },
+  { name: "Haircut Bearded D-Tan Facial", price: "₹999", category: "Haircut & Styling", gender: "men" },
+  { name: "Haircut,Hairspa,Beared Facial,D-Tan", price: "₹1,499", category: "Beard & Grooming", gender: "men" },
+  { name: "Threading Cleanup D-Tan", price: "₹499", category: "Facial & Skin", gender: "women" },
+  { name: "Threading Cleanup D-Tan Facial Haircut(With Setting)", price: "₹999", category: "Facial & Skin", gender: "women" },
+  { name: "Threading,D-Tan,Facial,Hand wax,Leg wax,Underarms Wax", price: "₹1,399", category: "Facial & Skin", gender: "women" },
+  { name: "Threading,Pedicure,Manicure,D-Tan", price: "₹999", category: "Facial & Skin", gender: "women" },
+  { name: "Haircut,Hairspa,D-Tan,Threading", price: "₹1,499", category: "Spa & Relaxation", gender: "women" },
+  { name: "Hydra Facial", price: "₹2,999", category: "Spa & Relaxation", gender: "women" },
+  { name: "Koreana Facial", price: "₹3,499", category: "Bridal Makeup", gender: "women" },
+  { name: "Botox Smoothening,Kerting", price: "₹4,999", category: "Bridal Makeup", gender: "women" },
 ];
 
 const categories = ["All", "Haircut & Styling", "Beard & Grooming", "Facial & Skin", "Spa & Relaxation", "Bridal Makeup", "Keratin & Smoothening"];
