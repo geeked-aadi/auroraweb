@@ -56,7 +56,7 @@ const ServicesSection = () => {
           transition={{ duration: 0.7, ease: [0.2, 0, 0, 1] }}
           className="font-display text-4xl md:text-5xl font-light text-center text-foreground mb-12 tracking-tight"
         >
-          Refined Treatments
+          Refined Treatments & Salon Services in Davangere
         </motion.h2>
 
         {/* Gender filter */}
@@ -76,7 +76,7 @@ const ServicesSection = () => {
           ))}
         </div>
 
-        {/* Category filter - scrollable */}
+        {/* Category filter - scrollable
         <div className="flex gap-3 mb-12 overflow-x-auto pb-2 justify-start md:justify-center scrollbar-none">
           {categories.map((cat) => (
             <button
@@ -91,7 +91,7 @@ const ServicesSection = () => {
               {cat}
             </button>
           ))}
-        </div>
+        </div> */}
 
         {/* Services grid */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-px bg-border">

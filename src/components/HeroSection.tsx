@@ -38,9 +38,9 @@ const HeroSection = () => {
           transition={{ ...transition, delay: 0.4 }}
           className="font-display text-5xl md:text-7xl lg:text-8xl font-light tracking-tight text-foreground mb-6 text-balance"
         >
-          Where Style Meets
+          Best Makeup Studio &
           <br />
-          <span className="text-gold-gradient">Perfection</span>
+          <span className="text-gold-gradient">Academy in Davangere</span>
         </motion.h1>
 
         <motion.p
@@ -49,8 +49,8 @@ const HeroSection = () => {
           transition={{ ...transition, delay: 0.6 }}
           className="font-body text-base md:text-lg text-white max-w-xl mx-auto mb-10"
         >
-          Experience the intersection of luxury spa treatments and elite beauty
-          education. 
+          Premium salon services in Davangere — bridal makeup, hair styling, spa
+          treatments, skin care & professional beauty courses.
           Men • Women • Children
         </motion.p>
 

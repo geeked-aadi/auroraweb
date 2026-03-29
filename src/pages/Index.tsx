@@ -91,9 +91,37 @@ const Index = () => {
         }`}
       >
         <ActiveComponent />
-        {/* Render Testimonials immediately after Academy on Mobile */}
         {activeSection === 5 && <TestimonialsSection />}
       </div>
+
+      {/* Hidden SEO content — visible to Google, hidden from users */}
+      <div className="sr-only">
+        <h1>Best Makeup Studio and Academy in Davangere</h1>
+        <p>
+          Aurora Makeup Studio and Academy offers premium salon services in
+          Davangere including bridal makeup, hair styling, keratin treatment,
+          spa, facials, threading, waxing, nail art, manicure and pedicure for
+          men and women.
+        </p>
+        <h2>Salon Services in Davangere</h2>
+        <ul>
+          <li>Haircut and beard grooming Davangere</li>
+          <li>Bridal makeup Davangere</li>
+          <li>Hair spa and keratin treatment Davangere</li>
+          <li>Hydra facial and skin care Davangere</li>
+          <li>Threading waxing and D-Tan Davangere</li>
+          <li>Manicure pedicure nail art Davangere</li>
+        </ul>
+        <h2>Beauty Academy and Courses in Davangere</h2>
+        <ul>
+          <li>Basic to Advanced Makeup course Davangere</li>
+          <li>Hairstyle training Davangere</li>
+          <li>Nail Art workshop Davangere</li>
+          <li>Airbrush makeup course Davangere</li>
+          <li>Mehandi workshop Davangere</li>
+        </ul>
+      </div>
+
       <WhatsAppFloat />
     </div>
   );

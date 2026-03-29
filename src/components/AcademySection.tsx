@@ -39,7 +39,7 @@ const AcademySection = () => {
           transition={{ duration: 0.7, ease: [0.2, 0, 0, 1] }}
           className="font-display text-4xl md:text-5xl font-light text-center text-foreground mb-6 tracking-tight"
         >
-          Professional Mastery
+          Beauty Academy & Courses in Davangere
         </motion.h2>
 
         {/* Badges */}
@@ -103,7 +103,7 @@ const AcademySection = () => {
             <div className="overflow-hidden gold-border-glow">
               <img
                 src={academyImg}
-                alt="Aurora Academy Training"
+                alt="Aurora Makeup Academy professional beauty courses in Davangere"
                 className="w-full object-cover aspect-[4/5]"
               />
             </div>
