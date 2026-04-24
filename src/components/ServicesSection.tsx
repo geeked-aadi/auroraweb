@@ -11,12 +11,12 @@ type ServiceItem = {
 };
 
 const services: ServiceItem[] = [
-  { name: "Haircut Beared D-Tan", price: "₹399", category: "Haircut & Styling", gender: "men" },
+  { name: "Haircut Beared D-Tan", price: "₹499", category: "Haircut & Styling", gender: "men" },
   { name: "Haircut Beared", price: "₹199", category: "Haircut & Styling", gender: "men" },
-  { name: "Haircut Bearded D-Tan Facial", price: "₹999", category: "Haircut & Styling", gender: "men" },
-  { name: "Haircut,Hairspa,Beared Facial,D-Tan", price: "₹1,499", category: "Beard & Grooming", gender: "men" },
-  { name: "Threading Cleanup D-Tan", price: "₹499", category: "Facial & Skin", gender: "women" },
-  { name: "Threading Cleanup D-Tan Facial Haircut(With Setting)", price: "₹999", category: "Facial & Skin", gender: "women" },
+  { name: "Haircut Bearded D-Tan Facial", price: "₹1499", category: "Haircut & Styling", gender: "men" },
+  { name: "Haircut,Hairspa,Beared Facial,D-Tan", price: "₹2,999", category: "Beard & Grooming", gender: "men" },
+  { name: "Threading Cleanup D-Tan", price: "₹799", category: "Facial & Skin", gender: "women" },
+  { name: "Threading Cleanup D-Tan Facial Haircut(With Setting)", price: "₹1399", category: "Facial & Skin", gender: "women" },
   { name: "Threading,D-Tan,Facial,Hand wax,Leg wax,Underarms Wax", price: "₹1,399", category: "Facial & Skin", gender: "women" },
   { name: "Threading,Pedicure,Manicure,D-Tan", price: "₹999", category: "Facial & Skin", gender: "women" },
   { name: "Haircut,Hairspa,D-Tan,Threading", price: "₹1,499", category: "Spa & Relaxation", gender: "women" },
