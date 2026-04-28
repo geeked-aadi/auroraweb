@@ -120,7 +120,7 @@ const ContactSection = () => {
                   href="tel:+916363939924"
                   className="text-sm text-primary hover:underline"
                 >
-                  +91 63639 39924
+                        +91 63639 39924
                 </a>
               </div>
             </div>
